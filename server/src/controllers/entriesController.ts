@@ -14,7 +14,7 @@ export const createEntry = async (req: Request, res: Response) => {
   } catch (err) {
     console.error('Create entry error:', err)
     if (err instanceof z.ZodError) {
-      const messages = err.errors.map(e => `${e.path.join('.')}: ${e.message}`).join('; ')
+      const messages = err.issues.map(e => `${e.path.join('.')}: ${e.message}`).join('; ')
       console.error('Validation errors:', messages)
       return res.status(400).json({ error: 'Validation failed: ' + messages })
     }
@@ -58,7 +58,7 @@ export const updateEntry = async (req: Request, res: Response) => {
   } catch (err) {
     console.error('Update entry error:', err)
     if (err instanceof z.ZodError) {
-      const messages = err.errors.map(e => `${e.path.join('.')}: ${e.message}`).join('; ')
+      const messages = err.issues.map(e => `${e.path.join('.')}: ${e.message}`).join('; ')
       console.error('Validation errors:', messages)
       return res.status(400).json({ error: 'Validation failed: ' + messages })
     }
