@@ -6,7 +6,6 @@ import Login from './pages/Login'
 import Signup from './pages/Signup'
 import { AuthProvider, useAuth } from './context/AuthContext'
 
-// Netflix-style dark theme
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
@@ -38,7 +37,9 @@ const darkTheme = createTheme({
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { user } = useAuth()
-  if (!user) return <Navigate to="/login" replace />
+  if (!user) {
+    return <Navigate to="/login" replace />
+  }
   return <>{children}</>
 }
 

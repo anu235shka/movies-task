@@ -24,7 +24,6 @@ import {
   FormControl,
   InputLabel,
   CircularProgress,
-  CardMedia,
 } from '@mui/material'
 import {
   Edit,

@@ -1,4 +1,3 @@
-// src/api/auth.ts
 import axios from 'axios'
 
 const API = axios.create({
@@ -9,7 +8,6 @@ const API = axios.create({
   },
 })
 
-// Add token automatically
 API.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token')
@@ -23,20 +21,16 @@ API.interceptors.request.use(
   }
 )
 
-// Handle response errors
 API.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response) {
-      // Server responded with error status
       return Promise.reject(error)
     } else if (error.request) {
-      // Request made but no response received
-      error.message = 'Network error. Please check if the backend server is running.'
+      error.message = 'Network error... Please check if the backend server is running or not.'
       return Promise.reject(error)
     } else {
-      // Something else happened
-      error.message = error.message || 'An unexpected error occurred'
+      error.message = error.message || 'An unexpected error occurred..'
       return Promise.reject(error)
     }
   }

@@ -17,7 +17,6 @@ export default function Signup() {
   const [error, setError] = useState('')
   const nav = useNavigate()
 
-  // Redirect if already logged in
   useEffect(() => {
     if (user) {
       nav('/', { replace: true })
@@ -30,7 +29,6 @@ export default function Signup() {
     setLoading(true)
     try {
       await signup(email, password, name)
-      // OTP is logged to backend console - transition to OTP stage
       setStage('otp')
     } catch (err: any) {
       setError(err.message || err.response?.data?.message || err.response?.data?.error || 'Signup failed')
@@ -65,7 +63,6 @@ export default function Signup() {
         overflow: 'hidden',
       }}
     >
-      {/* Animated background elements */}
       <Box
         component={motion.div}
         initial={{ opacity: 0 }}
@@ -94,7 +91,6 @@ export default function Signup() {
               zIndex: 1,
             }}
           >
-            {/* Logo */}
             <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
@@ -116,7 +112,6 @@ export default function Signup() {
               </Typography>
             </motion.div>
 
-            {/* Form */}
             <Box
               component="form"
               onSubmit={stage === 'signup' ? handleSignup : handleVerify}
@@ -379,7 +374,7 @@ export default function Signup() {
                         fontStyle: 'italic',
                       }}
                     >
-                      💡 Check the backend server console for the OTP code
+                      Check the backend server console for the OTP code
                     </Typography>
 
                     {error && (

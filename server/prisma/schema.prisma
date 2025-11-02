@@ -14,11 +14,11 @@ model Entry {
   title      String
   type       EntryType
   director   String?
-  budget     Float? // store budget in millions or in raw number
+  budget     Float? 
   location   String?
-  duration   String? // allow formats like "148 min" or "49 min/ep"
-  yearOrTime String? // freeform, e.g. "2010" or "2008–2013"
-  posterUrl  String? // optional image URL
+  duration   String? 
+  yearOrTime String? 
+  posterUrl  String? 
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
   userId     Int?

@@ -67,7 +67,6 @@ export default function Navbar({ onSearch }: NavbarProps) {
       }}
     >
       <Toolbar sx={{ justifyContent: 'space-between', gap: 2 }}>
-        {/* Logo */}
         <motion.div
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
@@ -89,7 +88,6 @@ export default function Navbar({ onSearch }: NavbarProps) {
           </Box>
         </motion.div>
 
-        {/* Search Bar */}
         <Box sx={{ flex: 1, maxWidth: '600px', margin: '0 2rem' }}>
           <TextField
             fullWidth
@@ -125,7 +123,6 @@ export default function Navbar({ onSearch }: NavbarProps) {
           />
         </Box>
 
-        {/* User Menu */}
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
           <Button
             startIcon={<Movie />}

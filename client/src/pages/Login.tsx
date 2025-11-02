@@ -15,7 +15,6 @@ export default function Login() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
-  // Redirect if already logged in
   useEffect(() => {
     if (user) {
       nav('/', { replace: true })
@@ -48,7 +47,7 @@ export default function Login() {
         overflow: 'hidden',
       }}
     >
-      {/* Animated background elements */}
+
       <Box
         component={motion.div}
         initial={{ opacity: 0 }}
@@ -76,7 +75,6 @@ export default function Login() {
               zIndex: 1,
             }}
           >
-            {/* Logo */}
             <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
@@ -97,8 +95,7 @@ export default function Login() {
                 NETFLIX
               </Typography>
             </motion.div>
-
-            {/* Login Form */}
+          
             <Box
               component="form"
               onSubmit={handleSubmit}

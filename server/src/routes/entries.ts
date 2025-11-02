@@ -4,9 +4,9 @@ import { authMiddleware } from '../middleware/auth'
 const router = express.Router()
 
 router.use(authMiddleware)
-router.get('/', getEntries)        // GET /api/entries?page=1&limit=20
-router.post('/', createEntry)      // POST /api/entries
-router.put('/:id', updateEntry)    // PUT /api/entries/:id
-router.delete('/:id', deleteEntry) // DELETE /api/entries/:id
+router.get('/', getEntries)        
+router.post('/', createEntry)      
+router.put('/:id', updateEntry)    
+router.delete('/:id', deleteEntry) 
 
 export default router

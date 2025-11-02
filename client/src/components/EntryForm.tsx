@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import { createEntry, updateEntry } from '../api/entries'
 import type { Entry } from '../api/entries'
-import { Box, Button, TextField, MenuItem, Alert, FormHelperText } from '@mui/material'
-import { CloudUpload } from '@mui/icons-material'
+import { Box, Button, TextField, MenuItem, Alert } from '@mui/material'
 import { motion } from 'framer-motion'
 
 type Props = {
@@ -17,55 +16,17 @@ export default function EntryForm({ initial = {}, onDone }: Props) {
   })
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-  const [posterPreview, setPosterPreview] = useState<string | null>(initial?.posterUrl || null)
 
   const handleChange = (k: keyof Entry, v: any) =>
     setForm((prev) => ({ ...prev, [k]: v }))
-
-  const handlePosterUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (file) {
-      // Compress and preview image
-      const reader = new FileReader()
-      reader.onload = () => {
-        const img = new Image()
-        img.onload = () => {
-          // Create canvas and compress
-          const canvas = document.createElement('canvas')
-          let width = img.width
-          let height = img.height
-          
-          // Reduce size if too large
-          if (width > 600) {
-            height = Math.round((height * 600) / width)
-            width = 600
-          }
-          
-          canvas.width = width
-          canvas.height = height
-          const ctx = canvas.getContext('2d')
-          ctx?.drawImage(img, 0, 0, width, height)
-          
-          // Convert to base64 with aggressive compression
-          const compressed = canvas.toDataURL('image/jpeg', 0.6)
-          setPosterPreview(compressed)
-          handleChange('posterUrl', compressed)
-          console.log(`📸 Image compressed: ${(compressed.length / 1024).toFixed(2)}KB`)
-        }
-        img.src = reader.result as string
-      }
-      reader.readAsDataURL(file)
-    }
-  }
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
     setLoading(true)
-    console.log('📝 Submitting form with data:', form)
+    console.log('Submitting form with data:', form)
     try {
       if (form.id) {
-        // On update, only send changed fields to minimize payload
         const updatePayload: Partial<Entry> = {}
         if (initial.title !== form.title) updatePayload.title = form.title
         if (initial.type !== form.type) updatePayload.type = form.type
@@ -76,18 +37,18 @@ export default function EntryForm({ initial = {}, onDone }: Props) {
         if (initial.yearOrTime !== form.yearOrTime) updatePayload.yearOrTime = form.yearOrTime
         if (initial.posterUrl !== form.posterUrl) updatePayload.posterUrl = form.posterUrl
         
-        console.log('📤 Sending update payload:', updatePayload)
+        console.log('Sending update payload:', updatePayload)
         await updateEntry(form.id, updatePayload)
       } else {
         await createEntry(form as Entry)
       }
-      console.log('✅ Entry saved successfully')
+      console.log('Entry saved successfully')
       onDone && onDone()
     } catch (err: any) {
-      console.error('❌ Error saving entry:', err)
+      console.error('Error saving entry:', err)
       const errorMsg = err.response?.data?.error || err.message || 'Error saving entry'
       setError(errorMsg)
-      alert('❌ ' + errorMsg)
+      alert('Error saving entry: ' + errorMsg)
     } finally {
       setLoading(false)
     }
@@ -311,52 +272,6 @@ export default function EntryForm({ initial = {}, onDone }: Props) {
           },
         }}
       />
-
-      {/* <Box>
-        <input
-          type="file"
-          id="poster-upload"
-          accept="image/*"
-          onChange={handlePosterUpload}
-          style={{ display: 'none' }}
-        />
-        <Button
-          component="label"
-          htmlFor="poster-upload"
-          variant="outlined"
-          startIcon={<CloudUpload />}
-          fullWidth
-          sx={{
-            color: '#fff',
-            borderColor: '#e50914',
-            '&:hover': {
-              borderColor: '#f40612',
-              backgroundColor: 'rgba(229, 9, 20, 0.1)',
-            },
-          }}
-        >
-          Upload Poster Image
-        </Button>
-        <FormHelperText sx={{ color: 'rgba(255, 255, 255, 0.5)', textAlign: 'center', mt: 1 }}>
-          Click to upload a poster image (optional)
-        </FormHelperText>
-      </Box>
-
-      {posterPreview && (
-        <Box
-          component="img"
-          src={posterPreview}
-          alt="Poster Preview"
-          sx={{
-            width: '100%',
-            maxHeight: '300px',
-            objectFit: 'cover',
-            borderRadius: '8px',
-            border: '2px solid #e50914',
-            marginTop: '1rem',
-          }}
-        />
-      )} */}
 
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2, marginTop: 2 }}>
         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>

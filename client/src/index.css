@@ -34,7 +34,6 @@ body {
   width: 100%;
 }
 
-/* Netflix Red */
 .netflix-red {
   color: #e50914;
 }
@@ -43,7 +42,6 @@ body {
   background-color: #e50914;
 }
 
-/* Scrollbar Styling */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
